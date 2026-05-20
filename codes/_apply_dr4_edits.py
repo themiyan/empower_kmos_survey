@@ -110,6 +110,7 @@ os.makedirs(FIG_DIR, exist_ok=True)
 
 EDITS["loaders-code"] = '''\
 """Catalogue loaders. Each returns an `astropy.table.Table`."""
+import shutil
 from astropy.utils.data import download_file
 
 DJA_URL = ("https://zenodo.org/records/15472354/files/"
@@ -123,10 +124,16 @@ def _path(*parts):
 def load_dja_nirspec():
     """DJA NIRSpec v4.4 (Brammer / Heintz, Zenodo 15472354).
 
-    Returns the full table; downstream code restricts to the field box.
+    Reads the local copy in catalogues/dja_v4.4/ (see _provenance.txt). The
+    133 MB table is too large to track in git, so on a fresh checkout (e.g.
+    running from the web) it is fetched from Zenodo into that folder on first
+    use; subsequent runs read it from disk.
     """
-    path = download_file(DJA_URL, cache=True)
-    return Table.read(path, format="csv")
+    p = _path("dja_v4.4", "dja_msaexp_emission_lines_v4.4.csv.gz")
+    if not os.path.exists(p):
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        shutil.copy(download_file(DJA_URL, cache=True), p)
+    return Table.read(p, format="csv")
 
 
 def load_khostovan_cosmos():

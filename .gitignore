@@ -12,6 +12,10 @@ __pycache__/
 # --- local caches / scratch ---
 codes/cache/
 
+# --- large catalogue data (downloaded at runtime, too big for git) ---
+# DJA NIRSpec table (~133 MB); load_dja_nirspec() fetches it from Zenodo.
+catalogues/dja_v4.4/*.csv.gz
+
 # --- tool / agent local config ---
 .claude/
 

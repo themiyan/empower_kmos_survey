@@ -1,0 +1,202 @@
+This package contains the data release v1.0 of the Lyman-alpha Tomography IMACS Survey
+(LATIS), which is described in the paper "LATIS Data Release: ~4200 Spectra of z~2-3
+Galaxies, Redshifts, and IGM Tomography Maps" by Newman et al (2025) in ApJS.
+
+This data release is complete and no further releases are planned. However, we assign a
+version number to allow for any future corrections or possible expansions. A Jupyter
+Python notebook is included with examples of how to load and manipulate the data.
+
+If you make use of these data, please cite the aforementioned Newman et al (2025)
+and the survey paper (Newman et al 2020, ApJ 891, 147).
+
+==========================================================================================
+REDSHIFT CATALOG
+File: latis_zspec.fits (FITS table, 7408 rows)
+==========================================================================================
+Description of columns:
+- name (string)
+  Target name in format DX-N, where N is an integer and DX = D1, D2 (COSMOS), or D4.
+- field (string)
+  Field in which the target lies. This is the first two characters of the name.
+- RA, Dec (float, units of deg)
+  Coordinates from the CFHTLS T0007 catalog in D1 and D4 and Ilbert et al (2009) catalog
+  in COSMOS. In some cases, coordinates were adjusted to the surface brightness peak.
+- zqual (int)
+  Redshift quality flag. 4 = very high confidence, 3 = high confidence, 2 = low
+  confidence, 1 = single emission line, 0 = no redshift. See the ApJS paper for
+  confidence levels.
+- z (float)
+  Redshift; see the ApJS paper for estimates of random and systematic uncertainties. For
+  all targets with zqual < 3, z is set to NaN. For all stars, z is set to 0.
+- isqso (bool)
+  If True, the spectrum was modeled using the QSO templates as described in Newman
+  et al (2020). Other high-z sources were modeled using LBG templates.
+- isstar (bool)
+  If True, the source is identified as a star.
+- manualz (bool)
+  If True, the redshift was not determined through LBG/QSO spectrum fitting. As discussed
+  in the ApJS paper, this is the case for low-z galaxies, stars, and some QSOs and AGN.
+- badredux (bool)
+  If True, the spectrum is substantially affected by data reduction problems. Although a
+  redshift might still be obtained, quantitative analysis of spectra should exclude
+  these sources.
+- tomo (bool)
+  If True, the sight line was used for IGM tomography.
+- brionly (bool)
+  If True, the target was observed only on the bright-target masks intended for poor
+  weather. These masks do not cover the full survey area and do not reach a uniform
+  depth. It is recommended to exclude these targets if mapping galaxy densities.
+- adc_corr (bool)
+  If True, some of the exposures of this target were obtained with an incorrectly
+  operating ADC, and spectra were corrected as described in Section 3.3 of the paper.
+- z2 (float)
+  Redshift of foreground absorption identified via multiple H I or metal transitions.
+  If 'two galaxies' is present in the comments field, then z2 is a second galaxy
+  redshift identified in the same spectrum. See ApJS paper.
+- rmag (float)
+  Aperture r-band AB magnitude, corrected for point-source losses and Galactic
+  extinction. For sources of photometry, see Newman et al (2020), Section 3.2.
+- u-g, g-r (float) 
+  u-g and g-r colors used for target selection. A lower limit is given in cases of
+  a non-detection in u. See Newman et al (2020).
+- comments (string)
+  Comments based on visual inspection of spectra. These may contain specific phrases,
+  such as 'AGN' or 'two galaxies', with specific meanings discussed in the ApJS paper.
+
+
+==========================================================================================
+SPECTRA
+File: latis_spectra.fits (FITS table)
+==========================================================================================
+All one-dimensional spectra are provided in a single FITS table, whose rows are in the
+same order as latis_zspec.fits. Description of columns:
+- name (string)
+  Same as in latis_zspec.fits.
+- wave (1222 x float32)
+  Wavelength in Angstrom, in vacuum. This array is identical in every row but is repeated
+  for convenience.
+- flux (1222 x float32)
+  Flux densities f_nu in microJansky. Please note that, as discussed in the ApJS paper,
+  the spectra have *NOT* been corrected for slit losses, non-photometric conditions, or
+  other phenomena with an approximately gray effect on the flux normalization. The
+  flux densities are typically ~2x smaller than photometric measurements. Therefore
+  absolute fluxes *should not be used*. Masked pixels are set to NaN.
+- error (1222 x float32)
+  1 sigma uncertainties in f_nu.
+- model (1222 x float32)
+  The LBG/QSO best-fit spectral model. In the Lya forest, the mean flux has been divided
+  out of the templates, so this model represents the unabsorbed continuum.
+- model_mfr (1222 x float32)
+  The same model, but the Lya forest region has a continuum shape adjusted by mean flux
+  regularization (MFR) *and* is multiplied by the mean flux <F(z)>. Therefore the Lya
+  transmission fluctuation is delta_F = flux / model_mfr - 1.
+- absmask (1222 x bool)
+  Where True, this array indicates high-EW lines in the Lya forest that were identified
+  and excluded from the tomography analysis.
+
+
+==========================================================================================
+TARGET SAMPLING AND SPECTROSCOPIC SUCCESS RATES
+Files: latis_tsr.fits and latis_ssr.fits (multi-extension FITS)
+==========================================================================================
+Each FITS file has an extension for each survey field containing a map of the relative
+TSR or SSR, including WCS. The target sampling rate (TSR) is the fraction of objects in
+the parent catalog that were observed. The spectroscopic success rate (SSR) is the
+fraction of observed objects for which a high-confidence z_spec was obtained. These values
+consider only the main masks, not the bright-target masks (sources identified by the
+'brionly' flag above), which cover the survey area very non-uniformly. For the TSR map,
+the parent sample was defined by the candiate QSOs, plus the candidate LBGs in the range
+r_min < r < 24.8 (see ApJS paper). The absolute value of the TSR will vary strongly
+with magnitude, but its relative angular variation, which is the critical quantity for
+many applications (e.g., overdensities, clustering), should not. These maps were initially
+described and visualized in Newman et al (2024), ApJ 961, 27.
+
+
+==========================================================================================
+LYMAN-ALPHA TRANSMISSION FLUCTUATIONS: DELTA_F PIXELS
+Files: D{1,2,4}_pix.dat (binary format), D{1,2,4}_sightline_ids.dat
+==========================================================================================
+The D{1,2,4}_pix.dat files contain the measured Lyman-alpha transmission fluctuations delta_F
+in each field (note D2 = COSMOS) in the format required by the "dachshund" Wiener filtering
+code (see https://github.com/caseywstark/dachshund). The format is binary and consists of
+a series of double-precision floats (little endian). The first 5 floats contain X, Y, Z,
+delta_F_error, and delta_F for the first pixel. See the ApJS paper for the definition
+of the X, Y, Z coordinate system. Here delta_F_error refers to the sigma_tot of the
+ApJS paper, which consists of random and continuum errors added in quadrature. The
+next 5 floats correspond to the next pixel, and so on. The D1, D2, and D4 fields contain
+163823, 244883, and 60302 pixels, respectively. The files can be accessed in Python
+as follows:
+   import numpy as np
+   pixels = np.fromfile('D1_pix.dat').reshape((-1, 5))
+   X, Y, Z, dFerror, dF = pixels.T
+The D{1,2,4}_sightline_ids.dat files contain the information needed to associate
+each delta_F pixel with the spectrum from which it was derived. These files can be
+loaded as follows:
+   ids = np.fromfile('D1_sightline_ids.dat', dtype=int)
+In this example, 'ids' has the same length as the 'dF' array, and its values index the
+rows of the latis_zspec.fits table.
+
+
+==========================================================================================
+IGM TOMOGRAPHY MAPS
+Files: D{1,2,4}_map.fits and D{1,2,4}_map_unnorm.fits (multi-extension FITS)
+==========================================================================================
+The files D{1,2,4}_map.fits are the same as those distributed along with Newman et al
+2025, "LATIS: A Sample of IGM-Selected Protoclusters and Protogroups at z~2.5", at the
+separate Zenodo record https://doi.org/10.5281/zenodo.15200365.
+
+Three multi-extension FITS files contain maps for fields D1, D2 (COSMOS), and D4.
+
+Extention DELTA_F_NORM contains the map of the Lyman-alpha transmission fluctuation
+delta_F, smoothed with a 3D Gaussian having sigma = 4 cMpc/h, and normalized by the
+standard deviation sigma_map of the resulting map. LATIS analysies have almost always
+used these smoothed and normalized maps.
+
+Extension ERR_DELTA_F_NORM contains, for each voxel, the 1 sigma uncertainty in the
+smoothed delta_F / sigma_map. These are estimated from the mock surveys, as described at
+the end of Section 2 of Newman et al 2025.
+
+The three axes of the 3D map arrays correspond, in order, to the X, Y, and Z coordinates
+described in the ApJS paper. Voxel sizes are (1 cMpc/h)^3. Note that the Z axis is
+483 voxels long in every field.
+
+Extension Z is a 1D array containing the redshift of voxels along the Z axis. Note a 1D
+array is sufficient because the conversion does not depend on the transverse position.
+Extensions RA and DEC are 3D arrays, with the same dimensions as the map, containing the
+celestial coordinates of each voxel in deg. (The mapping from voxel to celestial
+coordinates depends on redshift, because we use a varying angular diameter distance to
+convert from angles to cMpc/h.) Coordinates here refer to voxel centers.
+
+The files D{1,2,4}_map_unnorm.fits contain the extensions DELTA_F and ERR_DELTA_F
+instead of DELTA_F_NORM and ERR_DELTA_F_NORM. These extensions contain delta_F and its
+1 sigma uncertainty, without normalization by sigma_map. The contents of the other arrays
+are the same.
+
+As discussed in the ApJS paper, there is a non-trivial relationship between the
+reconstructed delta_F in these maps and the expected transmission fluctuation.
+
+
+==========================================================================================
+MOCK IGM TOMOGRAPHY MAPS FROM MDPL2
+Files: mocks/D{1,2,4}_NN.fits where NN = 00, 01, ..., 99 (multi-extension FITS)
+==========================================================================================
+For each survey field, the data release contains 100 mock IGM tomography maps produced
+within the MDPL2 simulation snapshot at z=2.535.
+
+Extension DELTA_F_REC contains a 3D array of the mock-observed delta_F, smoothed with a
+sigma = 4 cMpc/h gaussian. The shape of the array follows the observed maps described
+above.
+
+Extension DELTA_F_TRUE contains a 3D array of the "true" delta_F, built directly from a
+dense grid of noiseless sightlines without applying a Wiener filter, as described in
+the ApJS paper.
+
+The x, y coordinates within the MDPL2 simulation box that correspond to the lower-left
+corner of each map (i.e., the lower edge of the first voxel) are given in header keywords
+X0 and Y0, which have units of cMpc/h. The size of the simulation box is (1000 cMpc/h)^3
+and the subvolumes are chosen to be mostly non-overlapping. The lower-left corner
+always has a simulation z coordinate of 0. These coordinates are necessary, for example,
+to compare delta_F to the halo overdensity computed from MDPL2 halo catalogs.
+
+
+Questions? Email anewman@carnegiescience.edu.

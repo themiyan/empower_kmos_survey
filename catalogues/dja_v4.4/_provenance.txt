@@ -1,0 +1,23 @@
+DJA (DAWN JWST Archive) NIRSpec emission-line catalogue, v4.4
+  Source URL       : https://zenodo.org/records/15472354/files/dja_msaexp_emission_lines_v4.4.csv.gz
+  Alternate (S3)   : https://s3.amazonaws.com/msaexp-nirspec/extractions/dja_msaexp_emission_lines_v4.4.csv.gz
+  Reference        : Brammer / Heintz et al., DAWN JWST Archive (Zenodo 15472354)
+  Reduction        : msaexp homogenised re-reduction of public JWST/NIRSpec MSA
+  Version          : v4.4 (released 2025-09-05)
+  Pulled on        : 2026-05-20 (copied from local survey_data/dja_spectra/)
+
+Files:
+  dja_msaexp_emission_lines_v4.4.csv.gz       133 MB, gzip-compressed CSV (full table)
+  dja_msaexp_emission_lines_v4.4.columns.csv   column descriptions / metadata
+
+Key spec-z columns:
+  ra, dec    : astrometry (deg), Gaia/NIRCam-tied, sub-pixel
+  z_best     : best spectroscopic redshift
+  grade      : confidence grade 0-3 (3 = secure; downstream uses grade==3 & z_best>0)
+  + emission-line fluxes (see .columns.csv)
+
+Notes:
+  Previously downloaded at runtime from Zenodo via astropy download_file(cache=True).
+  Now stored locally to remove the network dependency; load_dja_nirspec() in the
+  spec-z analysis reads this file directly. Match radius 0.5" (SPECZ_MATCH_RADII).
+  In the GOODS-S layer priority, JADES-DR4 sits above DJA.
