@@ -70,15 +70,6 @@ to keep the repo light (e.g. the LEGA-C rest-frame spectra HDF5); re-fetch them
 using the instructions in the relevant `catalogues/*/_provenance.txt` /
 `README.md`. Several VizieR/TAP tables can be regenerated with `astroquery`.
 
-## Science caveats (read before reusing the numbers)
-
-- **Cross-matches are positional only** (sky-separation nearest-neighbour). They do
-  not resolve blends or use redshift agreement to confirm a match — treat
-  "NEW vs MATCHED" counts as indicative, not definitive.
-- **ASTRODEEP-GS43 photo-z is biased high** by ~+0.46 at z > 1, so it is unreliable
-  for tier-2/3 selection on its own; lean on spectroscopy in those tiers.
-- Redshift quality flags differ between surveys; the unified GOODS-S compilation
-  applies a priority-ordered, per-survey match radius (see the notebook).
 
 ## Underlying catalogues — please cite
 
