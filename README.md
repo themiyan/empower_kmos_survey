@@ -1,10 +1,7 @@
 # EMPOWER KMOS Survey — spec-z inventory & sample selection
 
-Code and supporting catalogues for the **sample-selection** work of the EMPOWER
-VLT/KMOS Large Programme. The repository's centre of gravity is the
-spectroscopic-redshift (spec-z) audit in [`codes/`](codes/): how much reliable
-spec-z already exists for EMPOWER's targets, where the gaps are, and which
-external surveys fill them — across the **COSMOS** and **GOODS-S** fields.
+Code and supporting catalogues for the EMPOWER
+VLT/KMOS Large Programme fields. 
 
 ## The survey in one paragraph
 

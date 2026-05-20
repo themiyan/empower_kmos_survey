@@ -1,0 +1,34 @@
+LATIS — Lyman-alpha Tomography IMACS Survey (Newman et al. 2025, ApJS 281, 32)
+  Zenodo record   : https://zenodo.org/records/15557327  (latis_v1.0.tar.gz, 3.6 GB)
+  DOI             : 10.3847/1538-4365/ae0cc5
+  Downloaded      : 2026-05-20 (full tarball fetched manually, catalogue extracted)
+  Instrument      : Magellan/IMACS multi-slit, R~1000, ground-based.
+  Fields          : CFHTLS D1, D2 (= COSMOS), D4 (1.65 deg^2 total).
+
+Files kept here:
+  latis_zspec.fits   7,408 rows — the spectroscopic redshift catalogue (used here).
+  latis_spectra.fits.zip          — 1D spectra (1,222-pix wave/flux/error/model arrays).
+  latis_ssr.fits / latis_tsr.fits — spectroscopic / targeting success-rate maps.
+  latis_v1.0/                     — extracted tarball tree (mocks, IGM maps, etc.).
+  LATIS_DR1_Demo_v1.0.ipynb       — official demo notebook.
+
+latis_zspec.fits columns:
+  name      target id, "DX-N" (field encoded in first 2 chars)
+  field     'D1' | 'D2' (COSMOS) | 'D4'   (bytes, |S2)
+  RA, Dec   degrees
+  z, z2     primary / secondary redshift
+  zqual     quality 0-4 (4 = very high confidence; secure = zqual>=3)
+  isqso, isstar, badredux, manualz, tomo, brionly  boolean flags
+  rmag, u-g, g-r   photometry; comments  spectral notes
+
+Counts (this catalogue):
+  zqual>=3 (all fields)      : 5,575
+  D2 / COSMOS rows           : 3,519
+  D2 secure (zqual>=3)       : 2,637  (z=2-3: 1,919 -> matches paper headline)
+  D2 secure galaxies         : 2,460  (zqual>=3 & !isstar & !badredux)
+
+Gap vs Khostovan DR1.1 (0.75" match, D2 secure galaxies):
+  matched 1,155 ; NEW 1,305 ; upgrade (Khostovan flag<3) 670
+  Tier 3 (2.10<z<2.50): 823 total -> 388 NEW + 240 upgrades  (Khostovan T3 secure
+    is only 851 across all COSMOS, so LATIS roughly doubles the tier-3 pool).
+  z-agreement vs Khostovan flag>=3: median dz/(1+z)=+0.0003, 6.0% catastrophic.
