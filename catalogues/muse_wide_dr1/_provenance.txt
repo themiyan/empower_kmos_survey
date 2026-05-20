@@ -1,0 +1,5 @@
+MUSE-Wide DR1 emission-line objects (Urrutia+19, A&A 624, A141)
+  VizieR catalog : J/A+A/624/A141
+  VizieR table   : emobj
+  Pulled on      : 2026-05-18 via astroquery.
+  Rows / cols    : 1,602 / 17

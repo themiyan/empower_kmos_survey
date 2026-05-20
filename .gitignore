@@ -1,0 +1,21 @@
+# --- macOS / editors ---
+.DS_Store
+*.swp
+*~
+
+# --- Python / Jupyter ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.virtual_documents/
+
+# --- local caches / scratch ---
+codes/cache/
+
+# --- tool / agent local config ---
+.claude/
+
+# --- environments ---
+.venv/
+venv/
+env/

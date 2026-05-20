@@ -1,0 +1,19 @@
+JADES DR3 NIRSpec spectroscopic catalogues (Rieke+ 2023, D'Eugenio+25)
+  VizieR catalogue : V/159  (JADES NIRCam & NIRSpec phot. & line fluxes DR1-DR3)
+  Reference paper  : D'Eugenio et al. 2025, ApJS (DR3)
+  Pulled on        : 2026-05-18 via astroquery.
+
+Tables stashed here:
+  jades_dr3_gsgrat.fits           (V/159/gsgrat, 2,525 rows, 81 cols)
+  jades_dr3_gsprism.fits          (V/159/gsprism, 2,525 rows, 94 cols)
+  jades_dr3_gngrat.fits           (V/159/gngrat, 1,561 rows, 83 cols)
+  jades_dr3_gnprism.fits          (V/159/gnprism, 1,561 rows, 92 cols)
+
+Key spec-z columns:
+  NIRSpID, NIRCamID, TIER, PID, Field, RAJ2000, DEJ2000,
+  zspec, f_zspec  (NIRSpec redshift and quality flag).
+
+`gsgrat` / `gngrat` are the gratings (G140M/G235M/G395M/G395H) tables;
+`gsprism` / `gnprism` are the CLEAR/PRISM low-resolution tables.
+Each pointing usually has both a prism and a grating spectrum, so the same
+source can appear once per table.

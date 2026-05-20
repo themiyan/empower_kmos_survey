@@ -1,0 +1,12 @@
+# Fetched from https://datacentral.org.au/vo/tap
+# Date: 2026-05-18
+# Rows: 9922
+
+SELECT
+    UID, DEVILS_ID, RAcen, DECcen, RAmax, DECmax, mag_Y,
+    mask, artefactFlag, starFlag,
+    DEVILS_RA, DEVILS_DEC, DEVILS_z, DEVILS_prob, DEVILS_zPlus,
+    DEVILS_probPlus, DEVILS_type,
+    zBest, zBestSource, zBestType
+FROM devils_dr1.D10MasterRedshifts
+WHERE DEVILS_z > 0

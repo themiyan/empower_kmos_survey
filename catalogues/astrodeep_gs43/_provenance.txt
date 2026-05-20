@@ -1,0 +1,9 @@
+ASTRODEEP-GS43 (Merlin et al. 2021, A&A 649, A22; arXiv:2103.09246)
+  Pulled from VizieR catalogue J/A+A/649/A22 via astroquery on 2026-05-18.
+  gs43phot:  35,108 rows (photometry)
+  gs43phys:  35,108 rows (zBest, zphots, masses, SFRs)
+  Sources with a non-empty 'zspec_survey' tag: 4,899
+
+Key 'phys' columns for spec-z analysis:
+  ID, zBest, s_zBest, zLePhare, zEAzY, zz_phot, zspec_survey,
+  Qflag_tau / M_tau / SFR_tau (and *_deltau variants).

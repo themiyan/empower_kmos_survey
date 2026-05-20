@@ -1,0 +1,5 @@
+AMUSED MUSE-UDF DR2 master table (Bacon+23, A&A 670, A4)
+  VizieR catalog : J/A+A/670/A4
+  VizieR table   : dr2-main
+  Pulled on      : 2026-05-18 via astroquery.
+  Rows / cols    : 2,221 / 75

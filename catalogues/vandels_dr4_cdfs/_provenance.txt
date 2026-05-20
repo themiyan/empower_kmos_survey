@@ -1,0 +1,5 @@
+VANDELS DR4 CDFS spectra (Garilli+21, A&A 647, A150)
+  VizieR catalog : J/A+A/647/A150
+  VizieR table   : cdfs
+  Pulled on      : 2026-05-18 via astroquery.
+  Rows / cols    : 1,061 / 56

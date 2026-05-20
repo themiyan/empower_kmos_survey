@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code or the compiled spec-z inventory, please cite the EMPOWER survey and the underlying catalogues listed in README.md."
+title: "EMPOWER KMOS Survey — spectroscopic-redshift inventory and sample-selection code"
+abstract: >-
+  Analysis code that audits spectroscopic-redshift availability and gaps for the
+  EMPOWER VLT/KMOS Large Programme target selection across the COSMOS and GOODS-S
+  fields, and supports the EMPOWER sample-selection effort.
+authors:
+  - name: "The EMPOWER Collaboration"
+keywords:
+  - astronomy
+  - galaxy surveys
+  - spectroscopic redshifts
+  - VLT/KMOS
+  - COSMOS
+  - GOODS-S
+license: MIT

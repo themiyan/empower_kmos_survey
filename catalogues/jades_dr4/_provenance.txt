@@ -1,0 +1,37 @@
+JADES DR4 NIRSpec spectroscopic catalogue
+  Source URL       : https://jades.herts.ac.uk/DR4/Combined_DR4_external_v1.2.1.fits
+  README           : Readme_DR4_catalogues.md (also Readme_DR4_spectra.md)
+  Reference papers : Curtis-Lake et al. 2025 (arXiv:2510.01033)
+                     Scholtz   et al. 2025 (arXiv:2510.01034)
+  Pulled on        : 2026-05-18
+
+File:
+  Combined_DR4_external_v1.2.1.fits   90 MB, 6 HDUs:
+    HDU 1 Obs_info     5,190 rows × 61 cols   (target catalogue + best z_Spec)
+    HDU 2 R100_5pix    5,190 rows × 86 cols   (PRISM line fluxes, 5-pix box)
+    HDU 3 R100_3pix    5,190 rows × 76 cols   (PRISM line fluxes, 3-pix box)
+    HDU 4 R1000_5pix   5,190 rows × 120 cols  (medium-res gratings line fluxes)
+    HDU 5 R1000_3pix   5,190 rows × 120 cols
+
+Key spec-z columns in HDU 1 ("Obs_info"):
+  Unique_ID, NIRSpec_ID, NIRCam_DR3_ID, NIRCam_DR5_ID,
+  PID, TIER, Tier_old, Field ('GS' or 'GN'),
+  RA_TARG, Dec_TARG (target coords, deg),
+  z_Spec     : best NIRSpec redshift
+  z_Spec_flag: byte 'A'..'E' (A=highly robust S/N>5 emission lines in R~1000;
+                              B=secure, C=probable, D=low-confidence, E=no good z).
+  z_R1000    : gratings-only redshift (use when prism low-quality)
+  z_PRISM    : low-res prism-only redshift
+  MUV / MUV_u / MUV_l (absolute UV magnitude, optional)
+
+z_Spec_flag breakdown (full table):
+  A=2,651  B=207  C=439  D=493  E=1,400   →  A/B/C = 3,297 (matches paper headline)
+By field:
+  GOODS-S (Field='GS'): 3,387 targets, A/B/C = 2,123
+  GOODS-N (Field='GN'): 1,803 targets, A/B/C = 1,174
+
+Overlap with prior GOODS-S layers (0.5″):
+  DR4 A/B/C (GS, 2,123)  ↔  DJA grade=3 (9,647) :   1,975 matched,  148 NEW vs DJA
+                          ↔  union(DJA+VANDELS+MUSE-Wide+MUSE-UDF):  141 NEW
+                          ↔  ASTRODEEP-GS43        :  1,438 matched, 685 no counterpart
+                          ↔  ASTRODEEP M*≥10¹⁰     :    108 sources

@@ -1,0 +1,9 @@
+# Python dependencies for the EMPOWER KMOS spec-z analysis notebooks.
+# Install with:  pip install -r requirements.txt
+astropy>=5.1
+numpy>=1.23
+scipy>=1.9
+matplotlib>=3.5
+pandas>=1.4
+astroquery>=0.4.6   # used to (re)fetch VizieR / TAP catalogues
+jupyter>=1.0
